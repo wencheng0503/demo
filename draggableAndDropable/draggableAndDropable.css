@@ -1,0 +1,57 @@
+.moveBox {
+	overflow: hidden;
+	width: 100%;
+	position: relative;
+}
+.moveBox .left {
+	float: left;
+	width: 40%;
+	background: #eee;
+	padding: 5px;
+	height: 300px;
+	margin: 0 120px 0 0;
+}
+.moveBox table {
+	width: 100%;
+	color: #0769AD;
+}
+.moveBox table tbody {
+	display: table-row-group;
+}
+.moveBox table tr {
+	display: table-row;
+	cursor: default;
+}
+.moveBox table .ui-selected, .dragtable .ui-selected {
+	background: #F8DE7D;
+}
+.moveBox .btnWrap {
+	position: absolute;
+	top: 50%;
+	margin-left: 40%;
+	margin-top: -60px;
+	width: 100px;
+	padding: 20px;
+}
+.moveBox .btnWrap button {
+	display: block;
+	width: 100px;
+	background: #888;
+	background: -moz-linear-gradient(top, #f6f6f6, #DEDEDE);
+	background: -webkit-linear-gradient(top, #f6f6f6, #DEDEDE);
+	color: #000;
+	border: none;
+	cursor: pointer;
+	outline: none;
+	border-radius: 2px;
+	border: 1px solid #888;
+	height: 30px;
+	margin: 5px 0 0 0;
+}
+.moveBox .right {
+	float: left;
+	width: 40%;
+	background: #eee;
+	padding: 5px;
+	height: 300px;
+}

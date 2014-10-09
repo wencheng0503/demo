@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+	<head>
+		<title>table sort</title>
+		<link rel="stylesheet" href="../global.css" type="text/css" />
+		<script src="../jquery-2.1.1.min.js" type="text/javascript"></script>
+		<script src="../jquery-ui.min.js" type="text/javascript"></script>
+		<style>
+		.sort-configurate {
+			padding: 10px;
+			border: 1px solid #ccc;
+		}
+		.sort-configurate p {
+			height: 20px;
+		}
+		.sort-table {
+			border-bottom: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			border-collapse: collapse;
+			width: 100%;
+			table-layout: fixed;
+		}
+		.sort-table th, .sort-table td {
+			border-top: 1px solid #ccc;
+			border-left: 1px solid #ccc;
+			padding: 5px;
+		}
+		.sortable-placeholder {
+			display: none;
+		}
+		.filter-sortable-placeholder {
+			height: 20px;
+		}
+		</style>
+	</head>
+	<body>
+	<div class="table-box">
+		<div id="sort-configurate" class="sort-configurate">
+			<form>
+			</form>
+		</div>
+	</div>
+	<table id="sort-table" class="sort-table">
+	</table>
+	<script>
+		var table = {
+			columns: [
+				{
+					label: "id",
+					key: "id",
+					display: true
+				},
+				{
+					label: "name",
+					key: "name",
+					display: true
+				},
+				{
+					label: "gender",
+					key: "gender",
+					display: true
+				},
+				{
+					label: "phone",
+					key: "phone",
+					display: true
+				},
+				{
+					label: "workplace",
+					key: "workplace",
+					display: true
+				},
+				{
+					label: "address",
+					key: "address",
+					display: false
+				}
+			],
+			rows: [
+				{
+					id: 1,
+					name: 'wendy',
+					gender: 'feman',
+					phone: '12345678901',
+					address: 'there',
+					workplace: 'here'
+				},
+				{
+					id: 2,
+					name: 'rachel',
+					gender: 'feman',
+					phone: '11455454555',
+					workplace: 'here',
+					address: 'there'
+				},
+				{
+					id: 3,
+					name: 'summer',
+					gender: 'feman',
+					phone: '66445545454',
+					workplace: 'here',
+					address: 'there'
+				},
+				{
+					id: 4,
+					name: 'vincent',
+					gender: 'man',
+					phone: '849898899',
+					workplace: 'here',
+					address: 'there'
+				}
+			]
+		}
+
+		var tablebox = $('#sort-table');
+		var formbox = $('#sort-configurate').find('form');
+		var map = {};
+		var columns = table.columns;
+		var rows = table.rows;
+		var placeIndex;
+		var filterPlaceIndex;
+		init();
+
+		function init() {
+			$.each(columns, function() {
+				map[this.key] = this;
+			});
+			render();
+		}
+
+		function render() {
+			generateFilter();
+			generateTableHead();
+			generateTableBody();
+		}
+
+		function generateFilter() {
+			var p = '';
+			$.each(columns, function(key, column) {
+				p += '<p><input type="checkbox" id='+column['key'] +' '+ (column['display'] ? 'checked=checked' :'') +'>' +
+					 '<label for=' + column['key'] + '>' + column['label'] + '</label></p>';
+			});
+			p += '<div><input type="button" value="save" id="save"></div>';
+			formbox.empty().append(p);
+
+			var saveBtn = $('#sort-configurate').find('#save');
+			saveBtn.on('click', function() {
+				var checkbox = $('#sort-configurate').find('input[type=checkbox]');
+				$.each(columns, function(key, column) {
+					var display = $('#'+column['key']).prop('checked');
+					column['display'] = display;
+				});
+				render();
+			});
+			formbox.sortable({
+				placeholder: 'filter-sortable-placeholder'
+			});
+		}
+
+		function generateTableHead() {
+			var html = '<thead><tr></tr></thead><tbody></tbody>';
+			var th = '';
+			$.each(columns, function(key, column) {
+				if(column['display']) {
+					th += '<th data-key='+ column['key']+'>' + column['label'] + '</th>';
+				}
+			});
+			tablebox.empty().append(html);
+			tablebox.find('thead tr').append(th);
+			tablebox.find('thead tr').sortable({
+				placeholder: 'sortable-placeholder'
+			});
+		}
+
+		function generateTableBody() {
+			$.each(rows, function(key,row) {
+				var tr = '<tr>';
+				$.each(columns, function(key, column) {
+					if(column['display']) {
+						tr += '<td>' + row[column['key']] + '</td>';
+					}
+				});
+				tr +='</tr>';
+				tablebox.find('tbody').append(tr);
+			});
+		}
+
+		formbox.on('sort', function(event, ui) {
+			var p = formbox.find('p');
+			var placeholder = formbox.find('.filter-sortable-placeholder')
+			filterPlaceIndex = p.index(placeholder);
+		});
+
+		formbox.on('sortupdate', function(event, ui) {
+			var elem = ui.item.find('input');
+			var id = $(elem).attr('id');
+			var data = map[id];
+			var index = $.inArray(data, columns);
+			columns.splice(index, 1);
+			columns.splice(filterPlaceIndex, 0, data);
+		});
+
+		tablebox.on('sort', function(event, ui) {
+			var th = tablebox.find('th');
+			var placeholder = tablebox.find('.sortable-placeholder')
+			placeIndex = th.index(placeholder);
+		});
+
+		tablebox.on('sortupdate', function(event, ui) {
+			var elem = ui.item;
+			var key = $(elem).attr('data-key');
+			var data = map[key];
+			var index = $.inArray(data, columns);
+			columns.splice(index, 1);
+			columns.splice(placeIndex, 0, data);
+			render();
+		});
+		
+	</script>
+	</body>
+</html>

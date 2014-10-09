@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>template</title>
+		<script src="../jquery-2.1.1.min.js" type="text/javascript"></script>
+
+	</head>
+	<body>
+	这里是个iframe
+	<a id="test" href="javascript:void(0)"></a>
+	<script>
+	jQuery('body').css('background','#fff');
+	</script>
+	<input class="buttonCls btn" id="btnViewAllImage" name="viewallbtn" onclick="location.href=document.getElementById('test').href" type="button" value="View All">
+
+
+
+	<div class="box" tabindex="-1" style="padding: 10px; background: #000;"><input class="test" type="checkbox" name='te' value="1" /></div>
+
+	<script>
+	$(document).ready(function(){
+		$('.box, .test').on('focus', function(){
+			jQuery('body').css('background','#fff000');
+		});
+		$('.box, .test').on('blur', function(){
+			jQuery('body').css('background','#fff');
+		});
+
+		$('.box').on('click', function(){
+			$('.test').trigger('click')
+		})
+	});
+	</script>
+
+	</body>
+</html>

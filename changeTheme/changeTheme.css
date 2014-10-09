@@ -1,0 +1,26 @@
+
+.title {
+	color:#ccc;
+	font-size: 20px;
+}
+.box {
+	display: -webkit-box;
+	display: box;
+	width: 100%;
+}
+.box .item {
+	-webkit-box-flex: 1;
+	box-flex: 1;
+}
+.box .item:first-child {
+	-webkit-box-flex: 2;
+	box-flex: 2;
+	boder: 1px solid #888;
+}
+select::-ms-expand {
+	display: none;
+}
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}

@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+	<head>
+		<title>template</title>
+		<script src="../jquery-2.1.1.min.js" type="text/javascript"></script>
+		<script src="jquery.layout-latest.js" type="text/javascript"></script>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			ul, li {
+				list-style: none;
+			}
+
+			table {
+				width: 100%;
+				height: 500px;
+			}
+			#west-closerBP {
+				width: 50px;
+				position: absolute;
+				background: #ccc;
+				height: 30px;
+				border-radius: 5px;
+				text-align: center;
+				line-height: 30px;
+				top: 5px;
+				left: 5px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<table>
+			<tr id='test'>
+				<td class="ui-layout-west">west</td>
+				<td class="ui-layout-center">center</td>
+				<!-- <td class="ui-layout-south">south</td>
+				<td class="ui-layout-north">north</td>-->
+				<td class="ui-layout-east">east</td>
+			</tr>
+		</table>
+		</body>
+		<script>
+		$(document).ready(function () {
+			var layout_setting = {
+				name : "ourlayout",
+				defaults : {
+					applyDefaultStyles: true,
+					size : "auto",
+					minSize : 50,
+					paneClass : "pane", // default = 'ui-layout-pane'
+					resizerClass : "resizer", // default =
+												// 'ui-layout-resizer'
+					togglerClass : "toggler", // default =
+												// 'ui-layout-toggler'
+					buttonClass : "button", // default =
+											// 'ui-layout-button'
+					contentSelector : ".content",
+					contentIgnoreSelector : "span", // 'paneSelector'
+													// for content to
+													// 'ignore' when
+													// measuring room
+													// for content
+					togglerLength_open : 100, // WIDTH of toggler on
+												// north/south edges -
+												// HEIGHT on east/west
+												// edges
+					togglerLength_closed : 100, // "100%" OR -1 = full
+												// height
+					hideTogglerOnSlide : true, // hide the toggler when
+												// pane is 'slid open'
+					togglerTip_open: 'Close',
+					togglerTip_closed: 'Open',
+					resizerTip: 'resize',
+					// effect defaults - overridden on some panes
+					fxName : "slide", // none, slide, drop, scale
+					fxSpeed_open : 750,
+					fxSpeed_close : 1500,
+					fxSettings_open : {
+						easing : "easeInQuint"
+					},
+					fxSettings_close : {
+						easing : "easeOutQuint"
+					}
+				},
+				west : {
+					// get width from cookie or default value
+					size : 200,
+					spacing_closed : 20, // wider space when closed
+					togglerLength_closed : 20, // make toggler 'square'
+												// - 21x21
+					togglerAlign_closed : "top", // align to top of
+													// resizer
+					togglerLength_open : 0, // NONE - using custom
+											// togglers INSIDE west-pane
+					togglerAlign_open : "top",
+					slideTrigger_open : "mouseover",
+					initClosed : false,
+					// add 'bounce' option to default 'slide' effect
+					fxSettings_open : {
+						easing : "easeInQuint"
+					}
+
+					// add a call back function, when size changed, the
+					// width will save to server
+					// onresize : function() {
+					// 	var width = jQuery(".ui-layout-west #leftpane")
+					// 			.width();
+					// 	ConfigDataManager.setData(width,
+					// 			stickyElementId, stickyAttributeId);
+					// 	// trigger window reisze, so flexigrid will
+					// 	// adjust grid width
+					// 	jQuery(window).resize();
+					// 	// top["resultsFrame"].jQuery("div.flexigrid_faster").trigger(Constant.get("flexigrid.eventName.gridWidthChange"));
+					// }
+				},
+				center : {
+					onresize : "resizeLeft",
+					minWidth : 200,
+					minHeight : 200
+				},
+				maskIframesOnResize : true
+			};
+			ourlayout = $('#test').layout(layout_setting);
+
+			// $("<span>>></span>").attr("id", "west-closerBP").prependTo("#test > .ui-layout-west");
+			// ourlayout.addOpenBtn("#west-closerBP", "west");
+			// //$("#west-closerBP").attr("title", "close");
+			// //ourlayout.open("west");
+		});
+		</script>
+	</body>
+</html>
