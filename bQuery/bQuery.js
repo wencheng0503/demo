@@ -3,7 +3,7 @@ function bQuery(selector, context) {
 	return jQuery(selector, context);
 }
 bQuery.addClass = function() {
-	alert(3)
+	alert(4)
 }
 
 
